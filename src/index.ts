@@ -2,7 +2,6 @@ import type { PluginContext, InputOptions } from "rollup";
 import { sep } from "node:path";
 import { readFileSync } from "node:fs";
 import type { ResolvedConfig } from "vite";
-import { sideload } from "./buildStart";
 import { config } from "./config";
 import { generateBundle } from "./generateBundle";
 import { options } from "./options";
@@ -38,8 +37,6 @@ export const createViteBlock = (pluginConfig = {} as PluginConfig) => {
 			buildStart: async function (this: PluginContext, options: InputOptions) {
 				rootDirectory = options.input[0].substring(0, options.input[0].lastIndexOf("/"));
 				watch.forEach((file) => this.addWatchFile(file));
-
-				sideload.call(this, blockFile, outputDirectory);
 			},
 			transform: function (code: string, id: string) {
 				transform.call(this, code, id, rootDirectory, blockFile);

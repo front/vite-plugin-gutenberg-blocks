@@ -1,6 +1,6 @@
 {
 	"name": "vite-plugin-gutenberg-blocks",
-	"version": "1.3.2",
+	"version": "1.3.1",
 	"description": "Vite-powered Gutenberg block development for Wordpress",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
@@ -35,8 +35,13 @@
 		"@types/grecaptcha": "^3.0.4",
 		"@types/node": "^20.0.0",
 		"@vitejs/plugin-react": "^4.0.0",
+		"esbuild": "^0.19.2",
+		"postcss": "^8.4.29",
 		"postcss-scss": "^4.0.6",
-		"sass": "^1.63.6"
+		"rollup": "^3.29.1",
+		"sass": "^1.63.6",
+		"typescript": "4.9.4",
+		"vite": "^4.4.9"
 	},
 	"peerDependencies": {
 		"sass": "^1.63.0",
@@ -47,6 +52,7 @@
 		"autoprefixer": "^10.4.13",
 		"cssnano": "^6.0.0",
 		"postcss-nested": "^6.0.1",
+		"rollup-plugin-iife": "^0.7.0",
 		"vite-plugin-static-copy": "^0.17.0"
 	}
 }

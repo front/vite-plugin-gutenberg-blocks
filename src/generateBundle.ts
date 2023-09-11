@@ -63,23 +63,24 @@ export function generateBundle(
 	this: PluginContext,
 	options: OutputOptions,
 	bundle: { [fileName: string]: ChunkInfo | AssetInfo }
-) {
-	let hash: string = "";
+) {	
+	Object.values(bundle).map((file) => {
+		if (!file.code || !file.imports) return;
 
-	const imports = Object.values(bundle).reduce((acc, file) => {
-		if (!file.code) return acc;
+		const fileName = file.name;
+		const hash = generateFileHash(file.code);
+		
+		const fileImports = file.imports.map((i) => {
+			return i.replace(/^@wordpress\//, "wp-");
+		});
 
-		hash = generateFileHash(file.code);
-		file.imports.forEach((i) => {
-			i = i.replace(/^@wordpress\//, "wp-");
-			acc.add(i);
-		}, acc);
-		return acc;
-	}, new Set()) as Set<string>;
-
-	this.emitFile({
-		type: "asset",
-		fileName: "index.asset.php",
-		source: generatePhpAssetFile(imports, hash),
-	} satisfies EmittedAsset);
+		if(!!fileName){
+			this.emitFile({
+				type: "asset",
+				fileName: fileName + ".asset.php",
+				source: generatePhpAssetFile(fileImports, hash),
+			} satisfies EmittedAsset);
+		}
+	
+	});	
 }
